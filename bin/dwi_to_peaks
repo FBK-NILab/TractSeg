@@ -20,7 +20,7 @@ from __future__ import division
 from __future__ import print_function
 
 import argparse
-#from tractseg.libs import mrtrix
+from tractseg.libs import mrtrix
 
 def main():
     parser = argparse.ArgumentParser(description="Generate peaks image.",
