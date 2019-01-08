@@ -48,37 +48,6 @@ from tractseg.libs.system_config import SystemConfig as C
 from tractseg.libs import dataset_utils
 from tractseg.libs import exp_utils
 
-# Added by Pietro Astolfi 
-# ***
-def load_training_data_brainlife(Config, input_tuple):
-    """
-    Load data and labels for one subject from the training set. Cut and scale to make them have
-    correct size.
-
-    :param Config: config class
-    :param subject: subject id (string)
-    :return:
-    """
-    data_file = input_tuple[0]
-    seg_file = input_tuple[1]
-
-    for i in range(20):
-        try:
-            data = nib.load(data_file).get_data()
-            break
-        except IOError:
-            exp_utils.print_and_save(Config, "\n\nWARNING: Could not load file. Trying again in 20s (Try number: " + str(i) + ").\n\n")
-        exp_utils.print_and_save(Config, "Sleeping 20s")
-        sleep(20)
-    data = np.nan_to_num(data)  # Needed otherwise not working
-    data = dataset_utils.scale_input_to_unet_shape(data, Config.DATASET, Config.RESOLUTION)  # (x, y, z, channels)
-
-    seg = nib.load(seg_file).get_data()
-    seg = np.nan_to_num(seg)
-    seg = dataset_utils.scale_input_to_unet_shape(seg, Config.DATASET, Config.RESOLUTION)  # (x, y, z, classes)
-
-    return data, seg
-# ***
 
 def load_training_data(Config, subject):
     """
@@ -144,8 +113,6 @@ def load_training_data(Config, subject):
     return data, seg
 
 
-# modified by Pietro Astolfi
-# ***
 class BatchGenerator2D_Nifti_random(SlimDataLoaderBase):
     '''
     Randomly selects subjects and slices and creates batch of 2D slices.
@@ -165,7 +132,7 @@ class BatchGenerator2D_Nifti_random(SlimDataLoaderBase):
         subjects = self._data[0]
         subject_idx = int(random.uniform(0, len(subjects)))     # len(subjects)-1 not needed because int always rounds to floor
 
-        data, seg = load_training_data_brainlife(self.Config, subjects[subject_idx])
+        data, seg = load_training_data(self.Config, subjects[subject_idx])
 
         slice_idxs = np.random.choice(data.shape[0], self.batch_size, False, None)
         x, y = dataset_utils.sample_slices(data, seg, slice_idxs,
@@ -175,7 +142,6 @@ class BatchGenerator2D_Nifti_random(SlimDataLoaderBase):
         data_dict = {"data": x,     # (batch_size, channels, x, y, [z])
                      "seg": y}      # (batch_size, channels, x, y, [z])
         return data_dict
-# ***
 
 class BatchGenerator2D_Npy_random(SlimDataLoaderBase):
     '''
