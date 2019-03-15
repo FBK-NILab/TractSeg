@@ -6,20 +6,28 @@
     "exp_name": "brainlife-test",
     "exp_path": "/N/dc2/projects/lifebid/Paolo/data/TractSeg/sandbox",
     
-    "model": "UNet_Pytorch",
+    "model": "UNet_Pytorch_DeepSub",
     "num_epochs": 10,
     "train": True,
     "test": True,
+    "save_predictions": False,
 
     "dataset": "HCP",
-    "features_filename": "peaks"
+    "features_filename": "peaks",
+    "labelss_filename": "bundle_masks",
+    "data_resolution": 1.25,
     "classes": ["AF_left", "AF_right", "ATR_left", "ATR_right"],
     "dataset_folder": "",
     "labels_folder": "",
 
     "load_weights": False,
 
-    "train_subjects": ["599469", "599671"],
+    // WARNING: subjects name must be equal to the name of its folder
+    // i.e., subject = ["sub-599469"] means that the dataset has the 
+    // folder "sub-599469/"
+    "train_subjects": ["599469", "599671"], 
+    "validation_subjects": ["599469", "599671"],
     "test_subjects": ["601127"],
+    "cross_validation": False
 
 }
