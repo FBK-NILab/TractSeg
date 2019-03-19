@@ -93,6 +93,7 @@ def test_whole_subject(Config, model, subjects, type):
                 None,
                 None,
                 Config.CLASSES,
+                exp_utils.get_bundle_names(Config.CLASSES)[1:],
                 f1,
                 threshold=Config.THRESHOLD)
         else:
@@ -143,6 +144,7 @@ def main():
     import ipdb;ipdb.set_trace()
     parser.add_argument(
         "-json", help="Name of configuration to use", required=True)
+
     args = parser.parse_args()
 
     Config = getattr(
@@ -188,6 +190,7 @@ def main():
     Config.INPUT_DIM = exp_utils.get_correct_input_dim(Config)
 
     Config.NR_OF_CLASSES = len(Config.CLASSES)
+
 
     Config.EXP_PATH = exp_utils.create_experiment_folder(
         Config.EXP_NAME, Config.MULTI_PARENT_PATH, Config.TRAIN)
