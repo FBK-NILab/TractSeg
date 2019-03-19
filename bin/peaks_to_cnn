@@ -23,7 +23,7 @@ from tractseg.libs import (direction_merger, exp_utils, img_utils, metric_utils,
 from tractseg.libs.system_config import SystemConfig as C
 from tractseg.models.base_model import BaseModel
 """
-This module is for training the model. See Readme.md for more details about 
+This module is for training the model. See Readme.md for more details about
 training your own model.
 
 How to use this module:
@@ -56,7 +56,7 @@ def test_whole_subject(Config, model, subjects, type):
 
     # Metrics per bundle
     metrics_bundles = {}
-    for bundle in exp_utils.get_bundle_names(Config.CLASSES)[1:]:
+    for bundle in Config.CLASSES:
         metrics_bundles[bundle] = [0]
 
     for subject in subjects:
@@ -92,7 +92,7 @@ def test_whole_subject(Config, model, subjects, type):
                 metrics_bundles,
                 None,
                 None,
-                exp_utils.get_bundle_names(Config.CLASSES)[1:],
+                Config.CLASSES,
                 f1,
                 threshold=Config.THRESHOLD)
         else:
@@ -110,7 +110,7 @@ def test_whole_subject(Config, model, subjects, type):
                 metrics_bundles,
                 img_y,
                 img_probs,
-                exp_utils.get_bundle_names(Config.CLASSES)[1:],
+                Config.CLASSES,
                 threshold=Config.THRESHOLD)
 
     metrics = metric_utils.normalize_last_element(
@@ -140,25 +140,21 @@ def main():
         epilog=
         "Written by Pietro Astolfi. Please reference 'Wasserthal et al., TractSeg - Fast and accurate white matter tract segmentation. https://doi.org/10.1016/j.neuroimage.2018.07.070)'"
     )
+    import ipdb;ipdb.set_trace()
     parser.add_argument(
-        "-json", metavar="json", help="Name of configuration to use")
+        "-json", help="Name of configuration to use", required=True)
     args = parser.parse_args()
 
     Config = getattr(
         importlib.import_module("tractseg.experiments.base"), "Config")()
 
-    if args.config:
-        # Config.__dict__ does not work properly
-        Config = getattr(
-            importlib.import_module("tractseg.experiments.custom." +
-                                    args.config), "Config")()
-
     with open(args.json) as cfg_src:
         cfg = json.load(cfg_src)
 
     C.HOME = cfg["home"]
-    C.TRACTSEG_DATA_DIR = cfg["tractseg_data_dir"]
-    C.TRACTSEG_WEIGHTS_DIR = cfg["tractseg_weights_dir"]
+    #C.TRACTSEG_DATA_DIR = cfg["tractseg_data_dir"]
+    C.DATA_PATH = cfg["tractseg_data_dir"]
+    #C.TRACTSEG_WEIGHTS_DIR = cfg["tractseg_weights_dir"]
     C.EXP_PATH = cfg["exp_path"]
 
     Config.TRAIN = bool(cfg['train'])
@@ -191,7 +187,7 @@ def main():
     #Autoset input dimensions based on settings
     Config.INPUT_DIM = exp_utils.get_correct_input_dim(Config)
 
-    Config.NR_OF_CLASSES = len(exp_utils.get_bundle_names(Config.CLASSES)[1:])
+    Config.NR_OF_CLASSES = len(Config.CLASSES)
 
     Config.EXP_PATH = exp_utils.create_experiment_folder(
         Config.EXP_NAME, Config.MULTI_PARENT_PATH, Config.TRAIN)
@@ -234,6 +230,7 @@ def main():
         if Config.WEIGHTS_PATH == "":
             Config.WEIGHTS_PATH = exp_utils.get_best_weights_path(
                 Config.EXP_PATH, Config.LOAD_WEIGHTS)
+            print('Loaded weights at: %s' % Config.WEIGHTS_PATH) 
         model = BaseModel(Config)
         test_whole_subject(Config, model, Config.TEST_SUBJECTS, "test")
 

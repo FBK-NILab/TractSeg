@@ -1,33 +1,34 @@
 {
-    "home": "/N/dc2/projects/lifebid/Paolo/data/TractSeg/sandbox",
-    "tractseg_data_dir": "/N/dc2/projects/lifebid/Paolo/data/TractSeg",
+    "home": "/home/pastolfi/datasets/TractSeg_new/derivatives/training_EPRGTMSK8",
+    "tractseg_data_dir": "/home/pastolfi/datasets/TractSeg_new/derivatives/training_EPRGTMSK8",
     "tractseg_weights_dir": "",
+    "tractseg_dir": "/home/pastolfi/github/TractSeg-BrainLife",
 
     "exp_name": "brainlife-test",
-    "exp_path": "/N/dc2/projects/lifebid/Paolo/data/TractSeg/sandbox",
+    "exp_path": "/home/pastolfi/datasets/TractSeg_new/derivatives/training_EPRGTMSK8",
     
-    "model": "UNet_Pytorch_DeepSub",
-    "num_epochs": 10,
-    "train": True,
-    "test": True,
-    "save_predictions": False,
+    "model": "UNet_Pytorch_DeepSup",
+    "num_epochs": 2,
+    "train": true,
+    "test": true,
+    "save_predictions": true,
 
     "dataset": "HCP",
     "features_filename": "peaks",
-    "labelss_filename": "bundle_masks",
-    "data_resolution": 1.25,
-    "classes": ["AF_left", "AF_right", "ATR_left", "ATR_right"],
+    "labels_filename": "gt_masks",
+    "data_resolution": "1.25mm",
+    "classes": ["tract1", "tract2", "tract3", "tract4", "tract5", "tract6", "tract7", "tract8"],
     "dataset_folder": "",
     "labels_folder": "",
 
-    "load_weights": False,
+    "load_weights": false,
 
-    // WARNING: subjects name must be equal to the name of its folder
-    // i.e., subject = ["sub-599469"] means that the dataset has the 
-    // folder "sub-599469/"
-    "train_subjects": ["599469", "599671"], 
-    "validation_subjects": ["599469", "599671"],
-    "test_subjects": ["601127"],
-    "cross_validation": False
+    "//": "WARNING: subjects name must be equal to the name of its folder",
+    "//": "i.e., subject = [\"sub-599469\"] means that the dataset has the", 
+    "//": "folder \"sub-599469/\"",
+    "train_subjects": ["513130", "517239"], 
+    "validation_subjects": ["521331", "522434"],
+    "test_subjects": ["523032"],
+    "cross_validation": false
 
 }
