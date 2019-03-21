@@ -8,27 +8,31 @@
     "exp_path": "/home/pastolfi/datasets/TractSeg_new/derivatives/training_EPRGTMSK8",
     
     "model": "UNet_Pytorch_DeepSup",
-    "num_epochs": 2,
+    "num_epochs": 100,
     "train": true,
     "test": true,
-    "save_predictions": true,
+    "save_predictions": false,
 
     "dataset": "HCP",
     "features_filename": "peaks",
     "labels_filename": "gt_masks",
     "data_resolution": "1.25mm",
-    "classes": ["tract1", "tract2", "tract3", "tract4", "tract5", "tract6", "tract7", "tract8"],
+    "classes": ["Left_pArc", "Right_pArc", "Left_TPC", "Right_TPC", "Left_MdLF-SPL", "Right_MdLF-SPL", "Left_MdLF-Ang", "Right_MdLF-Ang"],
+
     "dataset_folder": "",
     "labels_folder": "",
 
+    "//": "NOTE: if load_weights is True and weights_path is empty, then ",
+    "//": "the best weights saved in the experiment folder are loaded",
     "load_weights": false,
+    "weights_path": "",
 
     "//": "WARNING: subjects name must be equal to the name of its folder",
     "//": "i.e., subject = [\"sub-599469\"] means that the dataset has the", 
     "//": "folder \"sub-599469/\"",
-    "train_subjects": ["513130", "517239"], 
-    "validation_subjects": ["521331", "522434"],
-    "test_subjects": ["523032"],
+    "train_subjects": ["513130", "517239", "521331", "522434", "523032", "524135", "525541", "529953", "531536", "531940", "540436", "541640", "547046", "548250", "552241", "553344", "555348", "555651", "557857", "558960", "559053", "561242", "561444", "562345", "562446", "565452", "567052", "567759", "568963", "569965", "573249", "573451", "578057", "580044", "580347", "580751", "581450", "583858", "585256", "585862", "586460", "594156", "597869", "598568", "800941", "803240", "809252", "810843", "814548", "814649", "815247", "816653", "818455", "825048", "825654", "826353", "826454", "827052", "832651", "835657", "844961", "849264", "849971", "856766", "861456", "865363", "869472", "872764", "873968", "877269"], 
+    "validation_subjects": ["884064", "885975", "886674", "887373", "891667", "896778", "896879", "898176", "899885", "905147", "907656", "947668", "951457", "957974", "965367", "970764", "972566", "973770", "978578", "979984", "987074", "995174", "996782"],
+    "test_subjects": ["500222", "506234", "510326", "910241", "910443", "911849", "917558", "912447", "917255", "919966", "927359", "929464", "983773", "990366", "991267", "992673"],
     "cross_validation": false
 
 }
