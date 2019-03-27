@@ -219,6 +219,8 @@ def main():
 
     #     Config.TRAIN_SUBJECTS, Config.VALIDATE_SUBJECTS, Config.TEST_SUBJECTS = exp_utils.get_cv_fold(Config.CV_FOLD, dataset=Config.DATASET)
 
+
+
     if Config.TRAIN:
         # create model
         model = BaseModel(Config)
@@ -230,11 +232,11 @@ def main():
 
     if Config.TEST:
         print("Testing...")
-        # load model with the chosen (if none takes the best) weights for test
+        # load model with the chosen (if none takes the best) weights
         if Config.WEIGHTS_PATH == "":
             Config.WEIGHTS_PATH = exp_utils.get_best_weights_path(
                 Config.EXP_PATH, Config.LOAD_WEIGHTS)
-            print('Loaded weights at: %s' % Config.WEIGHTS_PATH) 
+            print('Loaded weights at: %s' % Config.WEIGHTS_PATH)
         model = BaseModel(Config)
         test_whole_subject(Config, model, Config.TEST_SUBJECTS, "test")
 
