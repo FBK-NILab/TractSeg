@@ -229,6 +229,9 @@ def main():
 
         print("Training...")
         model = trainer.train_model(Config, model, data_loader)
+        
+        Config.LOAD_WEIGHTS = True
+        Config.WEIGHTS_PATH = ""
 
     if Config.TEST:
         print("Testing...")
