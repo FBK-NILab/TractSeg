@@ -4,7 +4,7 @@ MAINTAINER Pietro and Paolo (from Soichi Hayashis <hayashis@iu.edu>)
 
 ENV DEBIAN_FRONTEND=noninteractive
 #RUN apt-get update && apt-get install -y git g++ python python-numpy libeigen3-dev zlib1g-dev libqt4-opengl-dev libgl1-mesa-dev libfftw3-dev libtiff5-dev fsl-complete python-pip jq strace curl vim 
-RUN apt-get update && apt-get install -y git g++ python libeigen3-dev zlib1g-dev libqt4-opengl-dev libgl1-mesa-dev libfftw3-dev libtiff5-dev fsl-complete jq strace curl vim 
+RUN apt-get update && apt-get install -y git g++ python libeigen3-dev zlib1g-dev libqt4-opengl-dev libgl1-mesa-dev libfftw3-dev libtiff5-dev fsl-complete jq strace curl vim wget 
 
 ## install conda
 RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda2-4.5.11-Linux-x86_64.sh -O ~/miniconda.sh && \
