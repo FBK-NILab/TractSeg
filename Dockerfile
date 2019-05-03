@@ -3,7 +3,18 @@ FROM neurodebian:stretch-non-free
 MAINTAINER Pietro and Paolo (from Soichi Hayashis <hayashis@iu.edu>)
 
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install -y git g++ python python-numpy libeigen3-dev zlib1g-dev libqt4-opengl-dev libgl1-mesa-dev libfftw3-dev libtiff5-dev fsl-complete python-pip jq strace curl vim 
+#RUN apt-get update && apt-get install -y git g++ python python-numpy libeigen3-dev zlib1g-dev libqt4-opengl-dev libgl1-mesa-dev libfftw3-dev libtiff5-dev fsl-complete python-pip jq strace curl vim 
+RUN apt-get update && apt-get install -y git g++ python libeigen3-dev zlib1g-dev libqt4-opengl-dev libgl1-mesa-dev libfftw3-dev libtiff5-dev fsl-complete jq strace curl vim 
+
+## install conda
+RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda2-4.5.11-Linux-x86_64.sh -O ~/miniconda.sh && \
+    /bin/bash ~/miniconda.sh -b -p /opt/conda && \
+    rm ~/miniconda.sh && \
+    ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
+    echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
+    echo "conda activate base" >> ~/.bashrc
+
+RUN conda install numpy
 
 #libgomp1 seems to comes with pytorch so I don't need it
 
@@ -21,14 +32,18 @@ RUN mkdir -p ~/.tractseg \
 RUN tar -zxvf /code/mrtrix3_RC3.tar.gz -C code \
     && /code/mrtrix3/set_path
 
-RUN pip install seaborn
-RUN pip install torch torchvision
+#RUN pip install seaborn
+#RUN pip install torch torchvision
+RUN conda install -c anaconda seaborn
+RUN conda install pytorch torchvision cudatoolkit=9.0 -c pytorch
 
 #install batchgenerator/tractseg
-RUN pip install https://github.com/MIC-DKFZ/batchgenerators/archive/master.zip && pip install https://github.com/MIC-DKFZ/TractSeg/archive/v1.7.1.zip
-#RUN pip install https://github.com/MIC-DKFZ/batchgenerators/archive/master.zip && pip install https://github.com/MIC-DKFZ/TractSeg/archive/master.zip #10-24-2018
-
-RUN HOME=/ download_all_pretrained_weights
+#RUN pip install https://github.com/MIC-DKFZ/batchgenerators/archive/master.zip \
+#    && pip install https://github.com/MIC-DKFZ/TractSeg/archive/v1.7.1.zip
+RUN pip install git+git:https://github.com/MIC-DKFZ/batchgenerators@34980972009516a27e2b99837a4f483ce280cf9a \
+     && pip install git+https://github.com/FBK-NILab/TractSeg-BrainLife@brainlife-app
+     
+#RUN HOME=/ download_all_pretrained_weights
 
 #make it work under singularity 
 RUN ldconfig && mkdir -p /N/u /N/home /N/dc2 /N/soft
