@@ -41,8 +41,17 @@ RUN conda install pytorch torchvision cudatoolkit=9.0 -c pytorch
 #install batchgenerator/tractseg
 #RUN pip install https://github.com/MIC-DKFZ/batchgenerators/archive/master.zip \
 #    && pip install https://github.com/MIC-DKFZ/TractSeg/archive/v1.7.1.zip
-RUN pip install git+git:https://github.com/MIC-DKFZ/batchgenerators@34980972009516a27e2b99837a4f483ce280cf9a \
-     && pip install git+https://github.com/FBK-NILab/TractSeg-BrainLife@brainlife-app
+RUN git clone https://github.com/MIC-DKFZ/batchgenerators/archive/master.zip \
+    && cd batchgenerators \
+    && git checkout 34980972009516a27e2b99837a4f483ce280cf9a \
+    && pip install . \
+    && cd ..
+    
+RUN git clone https://github.com/FBK-NILab/TractSeg-BrainLife/archive/master.zip \
+    && cd TractSeg-BrainLife \
+    && git checkout brainlife-app \
+    && pip install . \
+    && cd ..
      
 #RUN HOME=/ download_all_pretrained_weights
 
