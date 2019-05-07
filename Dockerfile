@@ -37,7 +37,7 @@ RUN tar -zxvf /code/mrtrix3_RC3.tar.gz -C code \
 #RUN pip install torch torchvision
 RUN conda install -c anaconda seaborn
 
-RUN conda install pytorch torchvision cudatoolkit=9.0 -c pytorch
+RUN conda install pytorch torchvision cudatoolkit=10.0 -c pytorch
 
 #install batchgenerator/tractseg
 #RUN pip install https://github.com/MIC-DKFZ/batchgenerators/archive/master.zip \
