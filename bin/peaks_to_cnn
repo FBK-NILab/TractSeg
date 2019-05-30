@@ -177,6 +177,8 @@ def main():
     Config.LABELS_FILENAME = cfg["labels_filename"]
     Config.RESOLUTION = cfg["data_resolution"]
     Config.WEIGHTS_PATH = cfg["weights_path"]
+    Config.LOSS_WEIGHT = cfg["loss_weight"]
+    Config.LOSS_WEIGHT_LEN = cfg["loss_weight_len"]
 
     Config.MULTI_PARENT_PATH = join(C.EXP_PATH, Config.EXP_MULTI_NAME)
     Config.EXP_PATH = join(C.EXP_PATH, Config.EXP_MULTI_NAME, Config.EXP_NAME)
@@ -211,14 +213,29 @@ def main():
     cv = bool(cfg['cross_validation'])
 
     # TODO CROSSVALIDATION
-    # if cv:
-    #     subjects = Config.TRAIN_SUBJECTS +
-    #                Config.VALIDATE_SUBJECTS +
-    #                Config.TEST_SUBJECTS
-    #     subjects = list(utils.chunks(subjects, len(subjects)/5))
+    if cv:
+        trainS=Config.TRAIN_SUBJECTS
+        valS=Config.VALIDATE_SUBJECTS
+        testS=Config.TEST_SUBJECTS
+        subjects = trainS + valS +testS 
+        #to have a number of subjects multiple of 5
+        subjects = list(utils.chunks(subjects, int(len(subjects)/5)))
+        fold=Config.CV_FOLD
+         #Config.TRAIN_SUBJECTS, Config.VALIDATE_SUBJECTS, Config.TEST_SUBJECTS = exp_utils.get_cv_fold(Config.CV_FOLD, dataset=Config.DATASET)
+        if fold == 0:
+           train, validate, test = [0, 1, 2], [3], [4]
+        # train, validate, test = [0, 1, 2, 3, 4], [3], [4]
+        elif fold == 1:
+           train, validate, test = [1, 2, 3], [4], [0]
+        elif fold == 2:
+           train, validate, test = [2, 3, 4], [0], [1]
+        elif fold == 3:
+           train, validate, test = [3, 4, 0], [1], [2]
+        elif fold == 4:
+           train, validate, test = [4, 0, 1], [2], [3]
 
-    #     Config.TRAIN_SUBJECTS, Config.VALIDATE_SUBJECTS, Config.TEST_SUBJECTS = exp_utils.get_cv_fold(Config.CV_FOLD, dataset=Config.DATASET)
-
+        subjects = np.array(subjects)
+        Config.TRAIN_SUBJECTS, Config.VALIDATE_SUBJECTS, Config.TEST_SUBJECTS = list(subjects[train].flatten()), list(subjects[validate].flatten()), list(subjects[test].flatten())
 
 
     if Config.TRAIN:
