@@ -1,0 +1,38 @@
+{
+    "home": "./",
+    "tractseg_data_dir": "./dataset",
+    "tractseg_weights_dir": "",
+    "tractseg_dir": "/home/pastolfi/github/TractSeg-BrainLife",
+
+    "exp_name": "brainlife-training",
+    "exp_path": "./outputs",
+    
+    "model": "UNet_Pytorch_DeepSup",
+    "num_epochs": 100,
+    "train": false,
+    "test": true,
+    "save_predictions": true,
+
+    "dataset": "HCP",
+    "features_filename": "peaks",
+    "labels_filename": "masks",
+    "data_resolution": "1.25mm",
+    "classes": [],
+
+    "dataset_folder": "",
+    "labels_folder": "",
+
+    "//": "NOTE: if load_weights is True and weights_path is empty, then ",
+    "//": "the best weights saved in the experiment folder are loaded",
+    "load_weights": true,
+    "weights_path": "",
+
+    "//": "WARNING: subjects name must be equal to the name of its folder",
+    "//": "i.e., subject = [\"sub-599469\"] means that the dataset has the", 
+    "//": "folder \"sub-599469/\"",
+    "train_subjects": [], 
+    "validation_subjects": [],
+    "test_subjects": [],
+    "cross_validation": false
+
+}
