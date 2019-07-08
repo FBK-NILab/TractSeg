@@ -5,7 +5,7 @@ import glob
 import os
 from data_utils import split_masks
 
-if __name__ == 'main':
+if __name__ == '__main__':
     pred_file = glob.glob('./training_output/segmentations/*.nii.gz')[0]
     pred = nib.load(pred_file)
     
