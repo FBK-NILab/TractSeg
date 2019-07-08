@@ -47,7 +47,7 @@ def create_dataset(config_file):
 
             nii_merged_mask = merge_masks(to_be_merged)
             nib.save(nii_merged_mask, os.path.join(sub_dir, 'masks.nii.gz'))
-    print('dataset folders created')
+    print('dataset folders for %d subjects created' % len(sub_list))
 
     #TODO: CROSSVALIDATION
 
