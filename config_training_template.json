@@ -13,6 +13,9 @@
     "test": false,
     "save_predictions": false,
 
+    "loss_weight": 1,
+    "loss_weight_len": -1,
+    
     "dataset": "HCP",
     "features_filename": "peaks",
     "labels_filename": "masks",
