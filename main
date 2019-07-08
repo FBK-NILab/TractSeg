@@ -5,8 +5,6 @@
 #PBS -N tractseg
 #PBS -V
 
-[ $PBS_O_WORKDIR ] && cd $PBS_O_WORKDIR
-
 python brainlife-utils/create_training_dataset.py
 singularity exec --nv docker://paoloavesani/docker-test \
                     bin/peaks_to_cnn \
