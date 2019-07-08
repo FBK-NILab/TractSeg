@@ -72,7 +72,7 @@ def create_dataset(config_file):
     ts_config['classes'] = class_list
 
     with open('brainlife-utils/brainlife_config_training.json', 'wb') as f:
-        json.dump(ts_config)
+        json.dump(ts_config, f)
         print('written brainlife_config_training.json')
 
 
