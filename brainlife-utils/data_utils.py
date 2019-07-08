@@ -51,7 +51,7 @@ def create_dataset(config_file):
 
     #TODO: CROSSVALIDATION
 
-    perc_val = eval(cfg['perc_val'])
+    perc_val = cfg['perc_val']
     sub_train, sub_val = split_subjects(sub_list, perc_val, seed=10)
     print('using %d subjects for training and %d subjects for validation' 
                                         % (len(sub_train), len(sub_val)))
