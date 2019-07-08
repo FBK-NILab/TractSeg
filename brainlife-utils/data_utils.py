@@ -19,7 +19,7 @@ def create_dataset(config_file):
     class_list = []
     for i in inputs:
         sub = i['meta']['subject'].encode('utf-8')
-        if sub not in sub_list:
+        if 'sub-%s' % sub not in sub_list:
             sub_list.append('sub-' + sub)
         sub_dir = os.path.join(out_dataset_dir, 'sub-' + sub)
         if not os.path.exists(sub_dir):
