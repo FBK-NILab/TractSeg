@@ -3,7 +3,7 @@
 #PBS -l nodes=1:ppn=1
 #PBS -l walltime=12:00:00
 
-./brainlife-utils/create_training_dataset.py
+python brainlife-utils/create_training_dataset.py
 singularity exec --nv docker://paoloavesani/docker-test \
                     bin/peaks_to_cnn \
                     -json brainlife-utils/brainlife_config_training.json
