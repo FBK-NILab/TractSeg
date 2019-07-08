@@ -115,7 +115,7 @@ def split_masks(nii_merged_img, class_list, output_dir):
 
 def split_subjects(sub_list, perc_val, seed=None):
     n_sub = len(sub_list)
-    if seed != None
+    if seed != None:
         np.random.seed(seed)
     n_sub_val = max(np.floor(perc_val * n_sub),1)
     sub_val = np.random.choice(sub_list, n_sub_val, replace=False).tolist()
