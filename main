@@ -12,3 +12,10 @@ singularity exec --nv docker://paoloavesani/docker-test \
 mkdir weights
 mv output/*.npz weights/.
 mv output/Hyperparameters.txt weights/.
+
+if [ -f 'weights/*.npz' ]; then 
+  echo "Training completed."
+else 
+  echo "Weights missing."
+  exit 1
+fi
