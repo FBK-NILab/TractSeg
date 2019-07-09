@@ -11,4 +11,4 @@ singularity exec --nv docker://paoloavesani/docker-test \
                     -json brainlife-utils/brainlife_config_training.json
 mkdir weights
 mv output/*.npz weights/.
-mv output/Hyperparameters.txt weigths/.
+mv output/Hyperparameters.txt weights/.
