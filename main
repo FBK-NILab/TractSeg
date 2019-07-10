@@ -5,7 +5,8 @@
 #PBS -N tractseg
 #PBS -V
 
-python brainlife-utils/create_training_dataset.py
+#python brainlife-utils/create_training_dataset.py
+SINGULARITYENV_PYTHONNOUSERSITE=true singularity exec -e docker://brainlife/dipy:0.16.0 brainlife-utils/create_training_dataset.py
 singularity exec --nv docker://paoloavesani/docker-test \
                     bin/peaks_to_cnn \
                     -json brainlife-utils/brainlife_config_training.json
