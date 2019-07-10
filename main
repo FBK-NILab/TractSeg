@@ -9,9 +9,15 @@ python brainlife-utils/create_training_dataset.py
 singularity exec --nv docker://paoloavesani/docker-test \
                     bin/peaks_to_cnn \
                     -json brainlife-utils/brainlife_config_training.json
+                    
+if [ -d 'final_output/' ]; then 
+  rm -r final_output
+
+mv output final_output
+                 
 mkdir weights
-mv output/*.npz weights/.
-mv output/Hyperparameters.txt weights/.
+mv final_output/*.npz weights/.
+mv final_output/Hyperparameters.txt weights/.
 
 if [ -f 'weights/*.npz' ]; then 
   echo "Training completed."
