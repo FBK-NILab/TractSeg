@@ -62,6 +62,7 @@ def create_dataset(config_file):
 
     ts_config['train_subjects'] = sub_train
     ts_config['validation_subjects'] = sub_val
+    ts_config['test_subjects'] = sub_val
     
     ts_config['tractseg_data_dir'] = out_dataset_dir 
     ts_config['exp_name'] = 'output'
