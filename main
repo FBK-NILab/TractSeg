@@ -4,7 +4,7 @@
 #PBS -l vmem=31gb
 #PBS -N tractseg
 #PBS -V
-
+rm -r output
 python brainlife-utils/create_training_dataset.py
 singularity exec --nv docker://paoloavesani/docker-test \
                     bin/peaks_to_cnn \
