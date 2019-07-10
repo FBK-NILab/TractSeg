@@ -12,6 +12,7 @@ singularity exec --nv docker://paoloavesani/docker-test \
                     
 if [ -d 'final_output/' ]; then 
   rm -r final_output
+fi
 
 mv output final_output
                  
