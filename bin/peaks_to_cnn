@@ -186,8 +186,7 @@ def main():
     # Note: when test is false, test_subjects is empty and the test phase is
     # not done along training, otherwise for each training epoch the test is
     # executed and the f1 score is computed
-    if Config.TEST:
-        Config.TEST_SUBJECTS = cfg["test_subjects"]
+    Config.TEST_SUBJECTS = cfg["test_subjects"]
 
     #Autoset input dimensions based on settings
     Config.INPUT_DIM = exp_utils.get_correct_input_dim(Config)
