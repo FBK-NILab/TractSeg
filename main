@@ -8,25 +8,43 @@
 set -e
 set -x
 
-#python brainlife-utils/create_training_dataset.py
-SINGULARITYENV_PYTHONNOUSERSITE=true singularity exec -e docker://brainlife/dipy:0.16.0 brainlife-utils/create_training_dataset.py
-singularity exec --nv docker://paoloavesani/docker-test \
+masks=`jq -r '.masks' config.json`
+
+if [ ! $masks == null ]; then
+  echo "STARTING TRAINING."
+
+  #python brainlife-utils/create_training_dataset.py
+  SINGULARITYENV_PYTHONNOUSERSITE=true singularity exec -e docker://brainlife/dipy:0.16.0 brainlife-utils/create_training_dataset.py
+  singularity exec --nv docker://paoloavesani/docker-test \
                     bin/peaks_to_cnn \
                     -json brainlife-utils/brainlife_config_training.json
                     
-if [ -d 'final_output/' ]; then 
-  rm -r final_output
-fi
+  if [ -d 'final_output/' ]; then 
+   rm -r final_output
+  fi
 
-mv output final_output
-                 
-mkdir weights
-mv final_output/*.npz weights/.
-mv final_output/Hyperparameters.txt weights/.
+  mv output final_output
+  mkdir weights
+  mv final_output/*.npz weights/.
+  mv final_output/Hyperparameters.txt weights/.
 
-if [ -f 'weights/*.npz' ]; then 
-  echo "Training completed."
-else 
-  echo "Weights missing."
-  exit 1
-fi
+  if [ -f 'weights/*.npz' ]; then 
+    echo "Training completed."
+  else 
+    echo "Weights missing."
+    exit 1
+  fi
+  
+else
+  echo "STARTING TESTING."
+   
+  #TODO
+   
+  if [ -z "$(ls -A -- "tractseg_output")" ]; then    
+	  echo "tractseg_output is empty."; 
+	  exit 1;
+  else    
+    echo "test done." 
+  fi
+fi   
+
