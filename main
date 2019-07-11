@@ -32,13 +32,16 @@ if [ ! $masks == null ]; then
 		echo "Training completed."
 	else 
 		echo "Weights missing."
-	exit 1
+		exit 1
 	fi
   
 else
 	echo "STARTING TESTING."
    
-	#TODO
+	SINGULARITYENV_PYTHONNOUSERSITE=true singularity exec -e docker://brainlife/dipy:0.16.0 brainlife-utils/create_testing_dataset.py
+	singularity exec --nv docker://paoloavesani/docker-test \
+                    bin/peaks_to_cnn \
+                    -json brainlife-utils/brainlife_config_testing.json
    
 	if [ -z "$(ls -A -- "tractseg_output")" ]; then    
 		echo "tractseg_output is empty."; 
