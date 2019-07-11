@@ -6,7 +6,7 @@ import os
 from data_utils import split_masks
 
 if __name__ == '__main__':
-    pred_file = glob.glob('./training_output/segmentations/*.nii.gz')[0]
+    pred_file = glob.glob('./test_output/segmentations/*.nii.gz')[0]
     pred = nib.load(pred_file)
     
     # correct predictions size
@@ -36,5 +36,5 @@ if __name__ == '__main__':
 
     # split masks
     split_masks(corrected_pred, classes, outdir)
-    print('dataset for training created')
+    print('Segmented masks created')
 

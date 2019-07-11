@@ -41,12 +41,17 @@ if [ ! $masks == null ]; then
   
 else
 	echo "STARTING TEST..."
-   
-	SINGULARITYENV_PYTHONNOUSERSITE=true singularity exec -e docker://brainlife/dipy:0.16.0 brainlife-utils/create_test_dataset.py
-	singularity exec --nv docker://paoloavesani/docker-test \
-                    bin/peaks_to_cnn \
-                    -json brainlife-utils/brainlife_config_test.json
-	SINGULARITYENV_PYTHONNOUSERSITE=true singularity exec -e docker://brainlife/dipy:0.16.0 brainlife-utils/adjust_test_output.py
+
+  CMD="brainlife-utils/create_test_dataset.py && \
+  bin/peaks_to_cnn -json brainlife-utils/brainlife_config_test.json && \
+  brainlife-utils/adjust_test_output.py"
+	#SINGULARITYENV_PYTHONNOUSERSITE=true
+	singularity exec -e --nv docker://paoloavesani/docker-test ${CMD}
+
+  if [ -d 'tractseg_output/' ]; then 
+ 		rm -r tractseg_output
+	fi
+  mv output tractseg_output
    
 	if [ -z "$(ls -A -- "tractseg_output")" ]; then    
 		echo "tractseg_output is empty."; 

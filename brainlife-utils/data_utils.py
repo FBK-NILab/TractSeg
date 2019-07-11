@@ -85,10 +85,9 @@ def create_test_dataset(config_file):
     # dictionary of inputs
     inputs = cfg["_inputs"]
 
-    #out_dataset_dir = './dataset'
+    out_dataset_dir = './dataset'
 
-    #sub_list = []
-    #class_list = []
+    sub_list = []
     for i in inputs:
         sub = i['meta']['subject'].encode('utf-8')
         if 'sub-%s' % sub not in sub_list:
@@ -103,35 +102,40 @@ def create_test_dataset(config_file):
 
         i_key = i['keys'][0].encode('utf-8')
         if i_key == 'peaks':
-            i_path = os.path.join(i_dir, i_key + '.nii.gz')
-            i_path = os.path.abspath(i_path)
+            p_path = os.path.join(i_dir, i_key + '.nii.gz')
+            p_path = os.path.abspath(p_path)
+            p = nib.load(i_path)
             os.system(
                 'ln -s %s %s/%s' % (i_path, sub_dir, os.path.basename(i_path)))
+            # creating fake empty masks
+            msk_path = '%s/%s' % (sub_dir, 'masks.nii.gz') 
+            msk = np.expand_dims(np.zeros(p.get_data().shape[:3]),3)
+            nib.save(
+                nib.Nifti1Image(msk, affine=p.affine, header=p.header.copy()),
+                msk_path)
         elif i['keys'][0] == 'npz':
             #todo: path to weights
-            
+            npz_path = glob.glob(os.path.join(i_dir, i_key, '*.npz'))[0]
+            npz_path = os.path.abspath(npz_path)
+            hyp_path = glob.glob(os.path.join(i_dir, 
+                                            i_key, 'Hyperparameters.txt'))[0]
+            hyp_path = os.path.abspath(hyp_path)
+            os.system('cp %s .' % hyp_path)
+
     print('dataset folders created')
 
     with open('config_test_template.json', 'rb') as f:
         ts_config = json.load(f)
         print('reading config_test_template.json')
 
-    #todo: overwrite template
-        
-    class_list = #read from Hyperparameters.txt
+    ts_config['test_subjects'] = sub_val
+    ts_config['weights_path'] = npz_path
     
-    #ts_config['train_subjects'] = sub_train
-    #ts_config['validation_subjects'] = sub_val
-    #ts_config['test_subjects'] = sub_val
+    ts_config['tractseg_data_dir'] = out_dataset_dir 
+    ts_config['exp_name'] = 'test_output'
+    ts_config['exp_path'] = './'
     
-    #ts_config['tractseg_data_dir'] = out_dataset_dir 
-    #ts_config['exp_name'] = 'output'
-    #ts_config['exp_path'] = './'
-    
-    #ts_config['tractseg_dir'] = ''
-    #ts_config['num_epochs'] = cfg['num_epochs']
-    #ts_config['classes'] = class_list
-
+    ts_config['tractseg_dir'] = ''
 
     with open('brainlife-utils/brainlife_config_test.json', 'wb') as f:
         json.dump(ts_config, f)
