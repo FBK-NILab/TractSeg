@@ -11,7 +11,7 @@ set -x
 masks=`jq -r '.masks' config.json`
 
 if [ ! $masks == null ]; then
-	echo "STARTING TRAINING."
+	echo "STARTING TRAINING..."
 
 	#python brainlife-utils/create_training_dataset.py
 	SINGULARITYENV_PYTHONNOUSERSITE=true singularity exec -e docker://brainlife/dipy:0.16.0 brainlife-utils/create_training_dataset.py
@@ -36,7 +36,7 @@ if [ ! $masks == null ]; then
 	fi
   
 else
-	echo "STARTING TEST."
+	echo "STARTING TEST..."
    
 	SINGULARITYENV_PYTHONNOUSERSITE=true singularity exec -e docker://brainlife/dipy:0.16.0 brainlife-utils/create_test_dataset.py
 	singularity exec --nv docker://paoloavesani/docker-test \
