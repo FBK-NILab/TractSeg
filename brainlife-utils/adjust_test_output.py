@@ -3,6 +3,7 @@
 import nibabel as nib
 import glob
 import os
+import json
 from data_utils import split_masks
 
 if __name__ == '__main__':

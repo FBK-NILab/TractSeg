@@ -104,9 +104,9 @@ def create_test_dataset(config_file):
         if i_key == 'peaks':
             p_path = os.path.join(i_dir, i_key + '.nii.gz')
             p_path = os.path.abspath(p_path)
-            p = nib.load(i_path)
+            p = nib.load(p_path)
             os.system(
-                'ln -s %s %s/%s' % (i_path, sub_dir, os.path.basename(i_path)))
+                'ln -s %s %s/%s' % (p_path, sub_dir, os.path.basename(p_path)))
             # creating fake empty masks
             msk_path = '%s/%s' % (sub_dir, 'masks.nii.gz') 
             msk = np.expand_dims(np.zeros(p.get_data().shape[:3]),3)
@@ -128,7 +128,7 @@ def create_test_dataset(config_file):
         ts_config = json.load(f)
         print('reading config_test_template.json')
 
-    ts_config['test_subjects'] = sub_val
+    ts_config['test_subjects'] = sub_list
     ts_config['weights_path'] = npz_path
     
     ts_config['tractseg_data_dir'] = out_dataset_dir 
@@ -165,14 +165,14 @@ def merge_masks(nifti_list):
 
 
 def split_masks(nii_merged_img, class_list, output_dir):
-    aff = merged_img.affine.copy()
-    hdr = merged_img.header.copy()
+    aff = nii_merged_img.affine.copy()
+    hdr = nii_merged_img.header.copy()
     
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
-    for i in range(merged_img.shape(3)):
-        img = merged_img[:,:,:,i]
+    for i in range(nii_merged_img.shape(3)):
+        img = nii_merged_img[:,:,:,i]
         img_name = class_list[i]
         nii_img = nib.Nifti1Image(img, affine=aff, header=hdr)
         nib.save(nii_img, 
