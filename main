@@ -5,6 +5,10 @@
 #PBS -N tractseg
 #PBS -V
 
+#needed for bridges
+#SBATCH -p GPU-shared
+#SBATCH --gres=gpu:p100:2
+
 set -e
 set -x
 
