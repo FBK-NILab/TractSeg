@@ -75,6 +75,67 @@ def create_training_dataset(config_file):
     with open('brainlife-utils/brainlife_config_training.json', 'wb') as f:
         json.dump(ts_config, f)
         print('written brainlife_config_training.json')
+        
+        
+def create_test_dataset(config_file):
+    with open(config_file, 'rb') as cfg_src:
+        cfg = json.load(cfg_src)
+        print('reading app config file')
+
+    # dictionary of inputs
+    inputs = cfg["_inputs"]
+
+    #out_dataset_dir = './dataset'
+
+    #sub_list = []
+    #class_list = []
+    for i in inputs:
+        sub = i['meta']['subject'].encode('utf-8')
+        if 'sub-%s' % sub not in sub_list:
+            sub_list.append('sub-' + sub)
+        sub_dir = os.path.join(out_dataset_dir, 'sub-' + sub)
+        if not os.path.exists(sub_dir):
+            os.makedirs(sub_dir)
+
+        # i is an input data
+        i_dir = os.path.join('..', i['task_id'],
+                             i['dataset_id']).encode('utf-8')
+
+        i_key = i['keys'][0].encode('utf-8')
+        if i_key == 'peaks':
+            i_path = os.path.join(i_dir, i_key + '.nii.gz')
+            i_path = os.path.abspath(i_path)
+            os.system(
+                'ln -s %s %s/%s' % (i_path, sub_dir, os.path.basename(i_path)))
+        elif i['keys'][0] == 'npz':
+            #todo: path to weights
+            
+    print('dataset folders created')
+
+    with open('config_test_template.json', 'rb') as f:
+        ts_config = json.load(f)
+        print('reading config_test_template.json')
+
+    #todo: overwrite template
+        
+    class_list = #read from Hyperparameters.txt
+    
+    #ts_config['train_subjects'] = sub_train
+    #ts_config['validation_subjects'] = sub_val
+    #ts_config['test_subjects'] = sub_val
+    
+    #ts_config['tractseg_data_dir'] = out_dataset_dir 
+    #ts_config['exp_name'] = 'output'
+    #ts_config['exp_path'] = './'
+    
+    #ts_config['tractseg_dir'] = ''
+    #ts_config['num_epochs'] = cfg['num_epochs']
+    #ts_config['classes'] = class_list
+
+
+    with open('brainlife-utils/brainlife_config_test.json', 'wb') as f:
+        json.dump(ts_config, f)
+        print('written brainlife_config_test.json')        
 
 
 def merge_masks(nifti_list):
