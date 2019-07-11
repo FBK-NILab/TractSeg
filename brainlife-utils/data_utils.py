@@ -5,7 +5,7 @@ import os
 import glob
 
 
-def create_dataset(config_file):
+def create_training_dataset(config_file):
     with open(config_file, 'rb') as cfg_src:
         cfg = json.load(cfg_src)
         print('reading app config file')
