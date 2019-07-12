@@ -26,6 +26,10 @@ if [ ! $num_epochs == null ]; then
 	if [ -d 'final_output/' ]; then 
  		rm -r final_output
 	fi
+	
+	if [ -d 'weights/' ]; then 
+ 		rm -r weights
+	fi
 
 	mv output final_output
 	mkdir weights
