@@ -32,7 +32,7 @@ if [ ! $num_epochs == null ]; then
 	mv final_output/*.npz weights/.
  	mv final_output/Hyperparameters.txt weights/.
 
-	if [ -f 'weights/*.npz' ]; then 
+	if [ -f weights/*.npz ]; then 
 		echo "Training completed."
 	else 
 		echo "Weights missing."
