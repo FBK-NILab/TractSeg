@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#PBS -l nodes=1:ppn=8,walltime=12:00:00
+#PBS -l nodes=1:ppn=8,walltime=01:00:00
 #PBS -l vmem=31gb
 #PBS -N tractseg
 #PBS -V
@@ -12,9 +12,9 @@
 set -e
 set -x
 
-masks=`jq -r '.masks' config.json`
+num_epochs=`jq -r '.num_epochs' config.json`
 
-if [ ! $masks == null ]; then
+if [ ! $num_epochs == null ]; then
 	echo "STARTING TRAINING..."
 
 	#python brainlife-utils/create_training_dataset.py
@@ -42,16 +42,16 @@ if [ ! $masks == null ]; then
 else
 	echo "STARTING TEST..."
 
-  CMD="brainlife-utils/create_test_dataset.py && \
-  bin/peaks_to_cnn -json brainlife-utils/brainlife_config_test.json && \
-  brainlife-utils/adjust_test_output.py"
+  	CMD="brainlife-utils/create_test_dataset.py && \
+  	bin/peaks_to_cnn -json brainlife-utils/brainlife_config_test.json && \
+  	brainlife-utils/adjust_test_output.py"
 	#SINGULARITYENV_PYTHONNOUSERSITE=true
 	singularity exec -e --nv docker://paoloavesani/docker-test ${CMD}
 
-  if [ -d 'tractseg_output/' ]; then 
+  	if [ -d 'tractseg_output/' ]; then 
  		rm -r tractseg_output
 	fi
-  mv output tractseg_output
+  	mv output tractseg_output
    
 	if [ -z "$(ls -A -- "tractseg_output")" ]; then    
 		echo "tractseg_output is empty."; 
