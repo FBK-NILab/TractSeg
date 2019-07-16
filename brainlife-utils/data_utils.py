@@ -118,6 +118,8 @@ def create_test_dataset(config_file):
         elif i_key == 'npz':
             dataset_id = i['dataset_id'].encode('utf-8')
             print(dataset_id)
+            print(os.path.join(i_dir, 'weights.npz'))
+            print(cfg["npz"])
             npz_path = glob.glob(os.path.join(i_dir, 'weights.npz'))[0]
             print(npz_path)
             npz_path = os.path.abspath(npz_path)
