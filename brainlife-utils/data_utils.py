@@ -120,12 +120,12 @@ def create_test_dataset(config_file):
             print(dataset_id)
             print(os.path.join(i_dir, 'weights.npz'))
             print(cfg["npz"])
-            npz_path = glob.glob(os.path.join(i_dir, 'weights.npz'))[0]
+            npz_path = os.path.join(i_dir, 'weights.npz')
             print(npz_path)
             npz_path = os.path.abspath(npz_path)
         elif i_key == 'hparam': 
             dataset_id = i['dataset_id'].encode('utf-8')
-            hyp_path = glob.glob(os.path.join(i_dir, 'Hyperparameters.txt'))[0]
+            hyp_path = os.path.join(i_dir, 'Hyperparameters.txt')
             hyp_path = os.path.abspath(hyp_path)
             os.system('cp %s .' % hyp_path)
 
