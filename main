@@ -31,6 +31,7 @@ if [ ! $num_epochs == null ]; then
  		rm -r weights
 	fi
 
+	mkdir final_output
 	mv output final_output
 	mkdir weights
 	mv final_output/*.npz weights/.
@@ -55,6 +56,7 @@ else
   	if [ -d 'tractseg_output/' ]; then 
  		rm -r tractseg_output
 	fi
+	mkdir tractseg_output
   	mv output tractseg_output
    
 	if [ -z "$(ls -A -- "tractseg_output")" ]; then    
