@@ -51,7 +51,7 @@ else
   	bin/peaks_to_cnn -json brainlife-utils/brainlife_config_test.json && \
   	brainlife-utils/adjust_test_output.py"
 	#SINGULARITYENV_PYTHONNOUSERSITE=true
-	singularity exec -e --nv docker://paoloavesani/docker-test ${CMD}
+	singularity exec -e --nv docker://paoloavesani/docker-test bash -c ${CMD}
 
   	if [ -d 'tractseg_output/' ]; then 
  		rm -r tractseg_output
