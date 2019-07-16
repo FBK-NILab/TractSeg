@@ -35,7 +35,7 @@ def create_training_dataset(config_file):
             i_path = os.path.abspath(i_path)
             os.system(
                 'ln -s %s %s/%s' % (i_path, sub_dir, os.path.basename(i_path)))
-        elif i['keys'][0] == 'masks':
+        elif i_key == 'masks':
             i_path = os.path.join(i_dir, i_key)
             # merge tractmasks
             to_be_merged = glob.glob(i_path + '/*.nii.gz')
@@ -84,7 +84,7 @@ def create_test_dataset(config_file):
 
     # dictionary of inputs
     inputs = cfg["_inputs"]
-
+    print(inputs)
     out_dataset_dir = './dataset'
 
     sub_list = []
@@ -101,6 +101,7 @@ def create_test_dataset(config_file):
                              i['dataset_id']).encode('utf-8')
 
         i_key = i['keys'][0].encode('utf-8')
+        print(i_key)
         if i_key == 'peaks':
             p_path = os.path.join(i_dir, i_key + '.nii.gz')
             p_path = os.path.abspath(p_path)
@@ -114,12 +115,12 @@ def create_test_dataset(config_file):
             nib.save(
                 nib.Nifti1Image(msk, affine=p.affine, header=p.header.copy()),
                 msk_path)
-        elif i['keys'][0] == 'npz':
+        elif i_key == 'npz':
             dataset_id = i['dataset_id'].encode('utf-8')
             npz_path = glob.glob(os.path.join(i_dir, 'weights.npz'))[0]
             print(npz_path)
             npz_path = os.path.abspath(npz_path)
-        elif i['keys'][0] == 'hparam': 
+        elif i_key == 'hparam': 
             dataset_id = i['dataset_id'].encode('utf-8')
             hyp_path = glob.glob(os.path.join(i_dir, 'Hyperparameters.txt'))[0]
             hyp_path = os.path.abspath(hyp_path)
