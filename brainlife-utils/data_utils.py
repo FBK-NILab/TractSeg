@@ -104,6 +104,7 @@ def create_test_dataset(config_file):
         if i_key == 'peaks':
             p_path = os.path.join(i_dir, i_key + '.nii.gz')
             p_path = os.path.abspath(p_path)
+            print(p_path)
             p = nib.load(p_path)
             os.system(
                 'ln -s %s %s/%s' % (p_path, sub_dir, os.path.basename(p_path)))
@@ -116,6 +117,7 @@ def create_test_dataset(config_file):
         elif i['keys'][0] == 'npz':
             dataset_id = i['dataset_id'].encode('utf-8')
             npz_path = glob.glob(os.path.join(i_dir, 'weights.npz'))[0]
+            print(npz_path)
             npz_path = os.path.abspath(npz_path)
         elif i['keys'][0] == 'hparam': 
             dataset_id = i['dataset_id'].encode('utf-8')
