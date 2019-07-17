@@ -177,8 +177,6 @@ def main():
     Config.LABELS_FILENAME = cfg["labels_filename"]
     Config.RESOLUTION = cfg["data_resolution"]
     Config.WEIGHTS_PATH = cfg["weights_path"]
-    Config.LOSS_WEIGHT = cfg["loss_weight"]
-    Config.LOSS_WEIGHT_LEN = cfg["loss_weight_len"]
 
     Config.MULTI_PARENT_PATH = join(C.EXP_PATH, Config.EXP_MULTI_NAME)
     Config.EXP_PATH = join(C.EXP_PATH, Config.EXP_MULTI_NAME, Config.EXP_NAME)
@@ -238,6 +236,8 @@ def main():
 
 
     if Config.TRAIN:
+        Config.LOSS_WEIGHT = cfg["loss_weight"]
+        Config.LOSS_WEIGHT_LEN = cfg["loss_weight_len"]
         # create model
         model = BaseModel(Config)
         # create dataloader
