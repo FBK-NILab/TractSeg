@@ -36,7 +36,7 @@ if [ ! $num_epochs == null ]; then
 	mv final_output/*.npz weights/.
  	mv final_output/Hyperparameters.txt weights/.
 	mkdir images
-	mv final_output/*.png images/
+	mv final_output/*.png images/.
 	cp brainlife-utils/brainlife_config_training.json images.json
 
 	if [ -f weights/*.npz ]; then 
