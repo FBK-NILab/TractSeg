@@ -88,13 +88,6 @@ def create_test_dataset(config_file):
 
     sub_list = []
     for i in inputs:
-        sub = i['meta']['subject'].encode('utf-8')
-        if 'sub-%s' % sub not in sub_list:
-            sub_list.append('sub-' + sub)
-        sub_dir = os.path.join(out_dataset_dir, 'sub-' + sub)
-        if not os.path.exists(sub_dir):
-            os.makedirs(sub_dir)
-
         # i is an input data
         i_dir = os.path.join('..', i['task_id'],
                              i['dataset_id']).encode('utf-8')
@@ -102,6 +95,11 @@ def create_test_dataset(config_file):
         i_key = i['keys'][0].encode('utf-8')
 
         if i_key == 'peaks':
+            sub = i['meta']['subject'].encode('utf-8')
+            sub_list.append('sub-' + sub)
+            sub_dir = os.path.join(out_dataset_dir, 'sub-' + sub)
+            if not os.path.exists(sub_dir):
+                os.makedirs(sub_dir)
             p_path = os.path.join(i_dir, i_key + '.nii.gz')
             p_path = os.path.abspath(p_path)
             p = nib.load(p_path)
