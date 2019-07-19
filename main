@@ -14,9 +14,9 @@ set -x
 
 num_epochs=`jq -r '.num_epochs' config.json`
 
-if [ -d 'dataset/' ]; then 
-	rm -r dataset
-fi
+#if [ -d 'dataset/' ]; then 
+#	rm -r dataset
+#fi
 
 if [ ! $num_epochs == null ]; then
 	echo "STARTING TRAINING..."
@@ -53,29 +53,29 @@ if [ ! $num_epochs == null ]; then
 else
 	echo "STARTING TEST..."
 
-	if [ -d 'test_output/' ]; then 
- 		rm -r test_output
-	fi
+	#if [ -d 'test_output/' ]; then 
+ 	#	rm -r test_output
+	#fi
 
   	#CMD="brainlife-utils/create_test_dataset.py && \
   	#bin/peaks_to_cnn -json brainlife-utils/brainlife_config_test.json && \
   	#brainlife-utils/adjust_test_output.py"
 	#SINGULARITYENV_PYTHONNOUSERSITE=true
-	singularity exec -e --nv docker://paoloavesani/docker-test bash -c "brainlife-utils/create_test_dataset.py && \
-  	bin/peaks_to_cnn -json brainlife-utils/brainlife_config_test.json && \
-  	brainlife-utils/adjust_test_output.py"
+	#singularity exec -e --nv docker://paoloavesani/docker-test bash -c "brainlife-utils/create_test_dataset.py && \
+  	#bin/peaks_to_cnn -json brainlife-utils/brainlife_config_test.json && \
+  	#brainlife-utils/adjust_test_output.py"
 
-  	if [ -d 'tractseg_output/' ]; then 
- 		rm -r tractseg_output
-	fi
-	mkdir tractseg_output
-  	mv test_output tractseg_output
-   
-	if [ -z "$(ls -A -- "tractseg_output")" ]; then    
-		echo "tractseg_output is empty."; 
-		exit 1;
-	else    
-		echo "test done." 
-	fi
+  	#if [ -d 'tractseg_output/' ]; then 
+ 	#	rm -r tractseg_output
+	#fi
+	#mkdir tractseg_output
+  	#mv test_output tractseg_output
+   	mv weights/*.npz weights/weights.npz
+	#if [ -z "$(ls -A -- "tractseg_output")" ]; then    
+	#	echo "tractseg_output is empty."; 
+	#	exit 1;
+	#else    
+	#	echo "test done." 
+	#fi
 fi   
 
