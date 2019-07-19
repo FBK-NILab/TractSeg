@@ -107,28 +107,28 @@ def test_whole_subject(Config, model, subjects, type):
                 0,
                 type=type,
                 threshold=Config.THRESHOLD)
-            metrics_bundles = metric_utils.calculate_metrics_each_bundle(
-                metrics_bundles,
-                img_y,
-                img_probs,
-                Config.CLASSES,
-                threshold=Config.THRESHOLD)
+            #metrics_bundles = metric_utils.calculate_metrics_each_bundle(
+            #    metrics_bundles,
+            #    img_y,
+            #    img_probs,
+            #    Config.CLASSES,
+            #    threshold=Config.THRESHOLD)
 
     metrics = metric_utils.normalize_last_element(
         metrics, len(subjects), type=type)
-    metrics_bundles = metric_utils.normalize_last_element_general(
-        metrics_bundles, len(subjects))
+    #metrics_bundles = metric_utils.normalize_last_element_general(
+    #    metrics_bundles, len(subjects))
 
     print("WHOLE SUBJECT:")
     pprint(metrics)
-    print("WHOLE SUBJECT BUNDLES:")
-    pprint(metrics_bundles)
+    #print("WHOLE SUBJECT BUNDLES:")
+    #pprint(metrics_bundles)
 
     with open(join(Config.EXP_PATH, "score_" + type + "-set.txt"), "w") as f:
         pprint(metrics, f)
         f.write("\n\nWeights: {}\n".format(Config.WEIGHTS_PATH))
         f.write("type: {}\n\n".format(type))
-        pprint(metrics_bundles, f)
+        #pprint(metrics_bundles, f)
     pickle.dump(metrics,
                 open(join(Config.EXP_PATH, "score_" + type + ".pkl"), "wb"))
     return metrics
