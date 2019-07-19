@@ -53,6 +53,10 @@ if [ ! $num_epochs == null ]; then
 else
 	echo "STARTING TEST..."
 
+	if [ -d 'test_output/' ]; then 
+ 		rm -r test_output
+	fi
+
   	#CMD="brainlife-utils/create_test_dataset.py && \
   	#bin/peaks_to_cnn -json brainlife-utils/brainlife_config_test.json && \
   	#brainlife-utils/adjust_test_output.py"
@@ -65,7 +69,7 @@ else
  		rm -r tractseg_output
 	fi
 	mkdir tractseg_output
-  	mv output tractseg_output
+  	mv test_output tractseg_output
    
 	if [ -z "$(ls -A -- "tractseg_output")" ]; then    
 		echo "tractseg_output is empty."; 
