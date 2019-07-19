@@ -14,6 +14,10 @@ set -x
 
 num_epochs=`jq -r '.num_epochs' config.json`
 
+if [ -d 'dataset/' ]; then 
+	rm -r dataset
+fi
+
 if [ ! $num_epochs == null ]; then
 	echo "STARTING TRAINING..."
 
