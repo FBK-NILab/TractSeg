@@ -82,8 +82,6 @@ def create_test_dataset(config_file):
         cfg = json.load(cfg_src)
         print('reading app config file')
 
-    # dictionary of inputs
-    #inputs = cfg["_inputs"]
     out_dataset_dir = './dataset'
 
     sub_list = []
@@ -110,38 +108,6 @@ def create_test_dataset(config_file):
     nib.save(
         nib.Nifti1Image(msk, affine=p.affine, header=p.header.copy()),
         msk_path)    
-    
-    #for i in inputs:
-    #    # i is an input data
-    #   i_dir = os.path.join('..', i['task_id'],
-    #                         i['dataset_id']).encode('utf-8')
-
-     #   i_key = i['keys'][0].encode('utf-8')
-
-      #  if i_key == 'peaks':
-       #     sub = i['meta']['subject'].encode('utf-8')
-        ##   sub_dir = os.path.join(out_dataset_dir, 'sub-' + sub)
-        #    if not os.path.exists(sub_dir):
-        #        os.makedirs(sub_dir)
-        #    p_path = os.path.join(i_dir, i_key + '.nii.gz')
-        #    p_path = os.path.abspath(p_path)
-        #   p = nib.load(p_path)
-        #   os.system(
-        #       'ln -s %s %s/%s' % (p_path, sub_dir, os.path.basename(p_path)))
-        #   # creating fake empty masks
-        #    msk_path = '%s/%s' % (sub_dir, 'masks.nii.gz') 
-        #    msk = np.expand_dims(np.zeros(p.get_data().shape[:3]),3)
-        #    nib.save(
-        #        nib.Nifti1Image(msk, affine=p.affine, header=p.header.copy()),
-        #        msk_path)
-       # elif i_key == 'npz':
-       #     npz_path = glob.glob(i_dir + '/*.npz')[0]
-       #     npz_path = os.path.abspath(npz_path)
-       # elif i_key == 'hparam': 
-       #     hyp_path = os.path.join(i_dir, 'Hyperparameters.txt')
-       #     hyp_path = os.path.abspath(hyp_path)
-       #     os.system('cp %s .' % hyp_path)
-    
     
     if not os.path.exists('./test_output'):
         os.makedirs('./test_output')        
@@ -196,7 +162,7 @@ def split_masks(nii_merged_img, class_list, output_dir):
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
-    for i in range(nii_merged_img.shape(3)):
+    for i in range(nii_merged_img.shape[3]):
         img = nii_merged_img[:,:,:,i]
         img_name = class_list[i]
         nii_img = nib.Nifti1Image(img, affine=aff, header=hdr)
