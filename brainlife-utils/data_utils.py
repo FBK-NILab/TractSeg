@@ -112,11 +112,10 @@ def create_test_dataset(config_file):
                 nib.Nifti1Image(msk, affine=p.affine, header=p.header.copy()),
                 msk_path)
         elif i_key == 'npz':
-            dataset_id = i['dataset_id'].encode('utf-8')
             npz_path = os.path.join(i_dir, 'weights.npz')
             npz_path = os.path.abspath(npz_path)
+            print(npz_path)
         elif i_key == 'hparam': 
-            dataset_id = i['dataset_id'].encode('utf-8')
             hyp_path = os.path.join(i_dir, 'Hyperparameters.txt')
             hyp_path = os.path.abspath(hyp_path)
             os.system('cp %s .' % hyp_path)
