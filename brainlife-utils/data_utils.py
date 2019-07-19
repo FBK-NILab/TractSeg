@@ -112,9 +112,8 @@ def create_test_dataset(config_file):
                 nib.Nifti1Image(msk, affine=p.affine, header=p.header.copy()),
                 msk_path)
         elif i_key == 'npz':
-            npz_path = os.path.join(i_dir, 'weights.npz')
+            npz_path = glob.glob(i_dir + '/*.npz')
             npz_path = os.path.abspath(npz_path)
-            print(npz_path)
         elif i_key == 'hparam': 
             hyp_path = os.path.join(i_dir, 'Hyperparameters.txt')
             hyp_path = os.path.abspath(hyp_path)
