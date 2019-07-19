@@ -34,7 +34,7 @@ def create_training_dataset(config_file):
             i_path = os.path.join(i_dir, i_key + '.nii.gz')
             i_path = os.path.abspath(i_path)
             os.system(
-                'ln -s %s %s/%s' % (i_path, sub_dir, os.path.basename(i_path)))
+                'ln -sf %s %s/%s' % (i_path, sub_dir, os.path.basename(i_path)))
         elif i_key == 'masks':
             i_path = os.path.join(i_dir, i_key)
             # merge tractmasks
@@ -99,7 +99,7 @@ def create_test_dataset(config_file):
     sub_dir = os.path.join(out_dataset_dir, 'sub-' + sub)
     if not os.path.exists(sub_dir):
         os.makedirs(sub_dir)
-    os.system('ln -s %s %s/%s' % (p_path, sub_dir, os.path.basename(p_path)))    
+    os.system('ln -sf %s %s/%s' % (p_path, sub_dir, os.path.basename(p_path)))    
         
     # creating fake empty masks
     p = nib.load(p_path)
@@ -144,7 +144,7 @@ def create_test_dataset(config_file):
     
     if not os.path.exists('./test_output'):
         os.makedirs('./test_output')        
-    os.system('ln -s %s ./test_output/weights.npz' % npz_path)    
+    os.system('ln -sf %s ./test_output/weights.npz' % npz_path)    
 
     print('dataset folders created')
 
