@@ -138,8 +138,10 @@ def create_test_dataset(config_file):
        #     hyp_path = os.path.abspath(hyp_path)
        #     os.system('cp %s .' % hyp_path)
     
+    
     if not os.path.exists('./test_output'):
         os.makedirs('./test_output')        
+    os.system('ln -s %s ./test_output/weights.npz' % npz_path)    
 
     print('dataset folders created')
 
@@ -148,7 +150,7 @@ def create_test_dataset(config_file):
         print('reading config_test_template.json')
 
     ts_config['test_subjects'] = sub_list
-    ts_config['weights_path'] = npz_path
+    ts_config['weights_path'] = 'weights.npz'
     ts_config['classes'] = classes
     ts_config['tractseg_data_dir'] = out_dataset_dir 
     ts_config['exp_name'] = 'test_output'
