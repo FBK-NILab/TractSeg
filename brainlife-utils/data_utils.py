@@ -88,8 +88,11 @@ def create_test_dataset(config_file):
 
     sub_list = []
     p_path = cfg["peaks"].encode('utf-8')
+    p_path = os.path.abspath(p_path)
     npz_path = cfg["npz"].encode('utf-8')
+    npz_path = os.path.abspath(npz_path)
     hyp_path = cfg["hparam"].encode('utf-8')
+    hyp_path = os.path.abspath(hyp_path)
     
     # creating peaks directory
     sub = cfg["_inputs"][0]['meta']['subject'].encode('utf-8')
