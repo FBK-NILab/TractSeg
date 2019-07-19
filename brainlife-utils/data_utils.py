@@ -83,41 +83,60 @@ def create_test_dataset(config_file):
         print('reading app config file')
 
     # dictionary of inputs
-    inputs = cfg["_inputs"]
+    #inputs = cfg["_inputs"]
     out_dataset_dir = './dataset'
 
     sub_list = []
-    for i in inputs:
-        # i is an input data
-        i_dir = os.path.join('..', i['task_id'],
-                             i['dataset_id']).encode('utf-8')
+    p_path = cfg["peaks"]
+    npz_path = cfg["npz"]
+    hyp_path = cfg["hparam"]
+    
+    # creating peaks directory
+    sub = cfg["_inputs"][0]['meta']['subject'].encode('utf-8')
+    sub_dir = os.path.join(out_dataset_dir, 'sub-' + sub)
+    if not os.path.exists(sub_dir):
+        os.makedirs(sub_dir)
+    os.system('ln -s %s %s/%s' % (p_path, sub_dir, os.path.basename(p_path)))    
+        
+    # creating fake empty masks
+    p = nib.load(p_path)
+    msk_path = '%s/%s' % (sub_dir, 'masks.nii.gz') 
+    classes = read_classes(hyp_path)
+    msk = np.expand_dims(np.zeros(p.get_data().shape[:3]),len(classes))
+    nib.save(
+        nib.Nifti1Image(msk, affine=p.affine, header=p.header.copy()),
+        msk_path)    
+    
+    #for i in inputs:
+    #    # i is an input data
+    #   i_dir = os.path.join('..', i['task_id'],
+    #                         i['dataset_id']).encode('utf-8')
 
-        i_key = i['keys'][0].encode('utf-8')
+     #   i_key = i['keys'][0].encode('utf-8')
 
-        if i_key == 'peaks':
-            sub = i['meta']['subject'].encode('utf-8')
-            sub_list.append('sub-' + sub)
-            sub_dir = os.path.join(out_dataset_dir, 'sub-' + sub)
-            if not os.path.exists(sub_dir):
-                os.makedirs(sub_dir)
-            p_path = os.path.join(i_dir, i_key + '.nii.gz')
-            p_path = os.path.abspath(p_path)
-            p = nib.load(p_path)
-            os.system(
-                'ln -s %s %s/%s' % (p_path, sub_dir, os.path.basename(p_path)))
-            # creating fake empty masks
-            msk_path = '%s/%s' % (sub_dir, 'masks.nii.gz') 
-            msk = np.expand_dims(np.zeros(p.get_data().shape[:3]),3)
-            nib.save(
-                nib.Nifti1Image(msk, affine=p.affine, header=p.header.copy()),
-                msk_path)
-        elif i_key == 'npz':
-            npz_path = glob.glob(i_dir + '/*.npz')[0]
-            npz_path = os.path.abspath(npz_path)
-        elif i_key == 'hparam': 
-            hyp_path = os.path.join(i_dir, 'Hyperparameters.txt')
-            hyp_path = os.path.abspath(hyp_path)
-            os.system('cp %s .' % hyp_path)
+      #  if i_key == 'peaks':
+       #     sub = i['meta']['subject'].encode('utf-8')
+        ##   sub_dir = os.path.join(out_dataset_dir, 'sub-' + sub)
+        #    if not os.path.exists(sub_dir):
+        #        os.makedirs(sub_dir)
+        #    p_path = os.path.join(i_dir, i_key + '.nii.gz')
+        #    p_path = os.path.abspath(p_path)
+        #   p = nib.load(p_path)
+        #   os.system(
+        #       'ln -s %s %s/%s' % (p_path, sub_dir, os.path.basename(p_path)))
+        #   # creating fake empty masks
+        #    msk_path = '%s/%s' % (sub_dir, 'masks.nii.gz') 
+        #    msk = np.expand_dims(np.zeros(p.get_data().shape[:3]),3)
+        #    nib.save(
+        #        nib.Nifti1Image(msk, affine=p.affine, header=p.header.copy()),
+        #        msk_path)
+       # elif i_key == 'npz':
+       #     npz_path = glob.glob(i_dir + '/*.npz')[0]
+       #     npz_path = os.path.abspath(npz_path)
+       # elif i_key == 'hparam': 
+       #     hyp_path = os.path.join(i_dir, 'Hyperparameters.txt')
+       #     hyp_path = os.path.abspath(hyp_path)
+       #     os.system('cp %s .' % hyp_path)
     
     if not os.path.exists('./test_output'):
         os.makedirs('./test_output')        
@@ -130,9 +149,7 @@ def create_test_dataset(config_file):
 
     ts_config['test_subjects'] = sub_list
     ts_config['weights_path'] = npz_path
-
-    ts_config['classes'] = read_classes('Hyperparameters.txt')
-    
+    ts_config['classes'] = classes
     ts_config['tractseg_data_dir'] = out_dataset_dir 
     ts_config['exp_name'] = 'test_output'
     ts_config['exp_path'] = './'
