@@ -16,21 +16,11 @@ if __name__ == '__main__':
                                     header=pred.header.copy())
 
     # read classes
-    with open('Hyperparameters.txt', 'rb') as f:
-        txt = f.read()
-        txt = txt.replace('\'', '"')
-        txt = txt.replace('False','false')
-        txt = txt.replace('True','true')
-        txt = txt.replace('None','""')
-        txt = txt.rsplit('}',1)[0] + '}'
-        txt = txt.replace('(','[')
-        txt = txt.replace(')',']')
-        txt = txt.replace('u"','"')
-        cfg = json.loads(txt)
+    with open('brainlife-utils/brainlife_config_test.json', 'rb') as f:
+        cfg = json.load(f)
 
-    classes = cfg['CLASSES']
+    classes = cfg['classes']
     classes = [c.encode('utf-8') for c in classes]
-    classes.sort()
 
     # create masks dir
     outdir = './output/masks'

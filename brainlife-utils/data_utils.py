@@ -130,6 +130,8 @@ def create_test_dataset(config_file):
 
     ts_config['test_subjects'] = sub_list
     ts_config['weights_path'] = npz_path
+
+    ts_config['classes'] = read_classes('Hyperparameters.txt')
     
     ts_config['tractseg_data_dir'] = out_dataset_dir 
     ts_config['exp_name'] = 'test_output'
@@ -189,3 +191,22 @@ def split_subjects(sub_list, perc_val, seed=None):
 
     return sub_train, sub_val
 
+def read_classes(txt):
+    with open(txt, 'rb') as f:
+        txt = f.read()
+        txt = txt.replace('\'', '"')
+        txt = txt.replace('False','false')
+        txt = txt.replace('True','true')
+        txt = txt.replace('None','""')
+        txt = txt.rsplit('}',1)[0] + '}'
+        txt = txt.replace('(','[')
+        txt = txt.replace(')',']')
+        txt = txt.replace('u"','"')
+        cfg = json.loads(txt)
+
+        classes = cfg['CLASSES']
+        classes = [c.encode('utf-8') for c in classes]
+        classes.sort()
+
+        return classes
+    
