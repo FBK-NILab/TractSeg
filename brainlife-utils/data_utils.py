@@ -84,7 +84,6 @@ def create_test_dataset(config_file):
 
     # dictionary of inputs
     inputs = cfg["_inputs"]
-    print(len(inputs))
     out_dataset_dir = './dataset'
 
     sub_list = []
@@ -101,11 +100,10 @@ def create_test_dataset(config_file):
                              i['dataset_id']).encode('utf-8')
 
         i_key = i['keys'][0].encode('utf-8')
-        print(i_key)
+
         if i_key == 'peaks':
             p_path = os.path.join(i_dir, i_key + '.nii.gz')
             p_path = os.path.abspath(p_path)
-            print(p_path)
             p = nib.load(p_path)
             os.system(
                 'ln -s %s %s/%s' % (p_path, sub_dir, os.path.basename(p_path)))
@@ -117,17 +115,16 @@ def create_test_dataset(config_file):
                 msk_path)
         elif i_key == 'npz':
             dataset_id = i['dataset_id'].encode('utf-8')
-            print(dataset_id)
-            print(os.path.join(i_dir, 'weights.npz'))
-            print(cfg["npz"])
             npz_path = os.path.join(i_dir, 'weights.npz')
-            print(npz_path)
             npz_path = os.path.abspath(npz_path)
         elif i_key == 'hparam': 
             dataset_id = i['dataset_id'].encode('utf-8')
             hyp_path = os.path.join(i_dir, 'Hyperparameters.txt')
             hyp_path = os.path.abspath(hyp_path)
             os.system('cp %s .' % hyp_path)
+    
+    if not os.path.exists('./test_output'):
+        os.makedirs('./test_output')        
 
     print('dataset folders created')
 
