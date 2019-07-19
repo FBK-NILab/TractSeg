@@ -163,7 +163,7 @@ def split_masks(nii_merged_img, class_list, output_dir):
         os.makedirs(output_dir)
 
     for i in range(nii_merged_img.shape[3]):
-        img = nii_merged_img[:,:,:,i]
+        img = nii_merged_img.get_data()[:,:,:,i]
         img_name = class_list[i]
         nii_img = nib.Nifti1Image(img, affine=aff, header=hdr)
         nib.save(nii_img, 
