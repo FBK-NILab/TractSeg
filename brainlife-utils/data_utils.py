@@ -96,6 +96,7 @@ def create_test_dataset(config_file):
     
     # creating peaks directory
     sub = cfg["_inputs"][0]['meta']['subject'].encode('utf-8')
+    sub_list.append(sub)
     sub_dir = os.path.join(out_dataset_dir, 'sub-' + sub)
     if not os.path.exists(sub_dir):
         os.makedirs(sub_dir)
