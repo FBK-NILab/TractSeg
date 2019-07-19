@@ -63,7 +63,7 @@ else
 	#SINGULARITYENV_PYTHONNOUSERSITE=true
 	singularity exec -e --nv docker://paoloavesani/docker-test bash -c "brainlife-utils/create_test_dataset.py && \
   	bin/peaks_to_cnn -json brainlife-utils/brainlife_config_test.json && \
-  	brainlife-utils/adjust_test_output.py && python create_wmc.py"
+  	brainlife-utils/adjust_test_output.py"
 
   	if [ -d 'tractseg_output/' ]; then 
  		rm -r tractseg_output
