@@ -12,6 +12,7 @@
     "train": false,
     "test": true,
     "save_predictions": true,
+    "postprocessing": true,
 
     "dataset": "HCP",
     "features_filename": "peaks",
