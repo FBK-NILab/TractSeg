@@ -273,8 +273,9 @@ def main():
                 if cfg['postprocessing']:
                     img_seg = img_utils.postprocess_segmentations(
                                 img_seg, 
-                                exp_utils.get_bundle_names(Config.CLASSES)[1:],
-                                blob_thr=blob_size_thr, hole_closing=2)
+                                Config.CLASSES,
+                                blob_thr=blob_size_thr,
+                                hole_closing=2)
 
                 # save predictions
                 img = nib.Nifti1Image(
