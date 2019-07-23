@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#PBS -l nodes=1:ppn=8,walltime=12:00:00
+#PBS -l nodes=1:ppn=8,walltime=00:10:00
 #PBS -l vmem=31gb
 #PBS -N tractseg
 #PBS -V
@@ -21,11 +21,11 @@ fi
 if [ ! $num_epochs == null ]; then
 	echo "STARTING TRAINING..."
 
-	python brainlife-utils/create_training_dataset.py
-	SINGULARITYENV_PYTHONNOUSERSITE=true singularity exec -e docker://brainlife/dipy:0.16.0 brainlife-utils/create_training_dataset.py
-	singularity exec --nv docker://paoloavesani/docker-test \
-                    bin/peaks_to_cnn \
-                    -json brainlife-utils/brainlife_config_training.json
+	#python brainlife-utils/create_training_dataset.py
+	#SINGULARITYENV_PYTHONNOUSERSITE=true singularity exec -e docker://brainlife/dipy:0.16.0 brainlife-utils/create_training_dataset.py
+	#singularity exec --nv docker://paoloavesani/docker-test \
+        #            bin/peaks_to_cnn \
+        #            -json brainlife-utils/brainlife_config_training.json
                     
 	if [ -d 'final_output/' ]; then 
  		rm -r final_output
@@ -35,7 +35,7 @@ if [ ! $num_epochs == null ]; then
  		rm -r weights
 	fi
 
-	mv output final_output
+	mv output_x3 final_output
 	mkdir weights
 	mv final_output/*.npz weights/weights.npz
  	mv final_output/Hyperparameters.txt weights/Hyperparameters.txt
