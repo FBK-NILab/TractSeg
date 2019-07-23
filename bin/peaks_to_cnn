@@ -274,7 +274,7 @@ def main():
                     img_seg = img_utils.postprocess_segmentations(
                                 img_seg, 
                                 Config.CLASSES,
-                                blob_thr=blob_size_thr=50,
+                                blob_thr=50,
                                 hole_closing=2)
 
                 # save predictions
