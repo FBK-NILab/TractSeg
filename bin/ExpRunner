@@ -205,6 +205,7 @@ def main():
 
     # After Training
     if Config.TRAIN:
+        Config.DATA_AUGMENTATION = cfg['data_augmentation']
         # Have to load other weights, because after training it has the weights of the last epoch
         print("Loading best epoch: {}".format(Config.BEST_EPOCH))
         Config.WEIGHTS_PATH = Config.EXP_PATH + "/best_weights_ep" + str(Config.BEST_EPOCH) + ".npz"
