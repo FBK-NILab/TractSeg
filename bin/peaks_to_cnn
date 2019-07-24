@@ -236,6 +236,7 @@ def main():
 
 
     if Config.TRAIN:
+        Config.DATA_AUGMENTATION = cfg['data_augmentation']
         Config.LOSS_WEIGHT = cfg["loss_weight"]
         Config.LOSS_WEIGHT_LEN = cfg["loss_weight_len"]
         # create model
