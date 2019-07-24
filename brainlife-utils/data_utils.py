@@ -71,6 +71,7 @@ def create_training_dataset(config_file):
     ts_config['tractseg_dir'] = ''
     ts_config['num_epochs'] = cfg['num_epochs']
     ts_config['classes'] = class_list
+    ts_config['data_augmentation'] = cfg['data_augmentation']
 
     with open('brainlife-utils/brainlife_config_training.json', 'wb') as f:
         json.dump(ts_config, f)
