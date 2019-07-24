@@ -25,11 +25,9 @@ if [ ! $num_epochs == null ]; then
  		rm -r output
 	fi
 
-	#python brainlife-utils/create_training_dataset.py
-	#SINGULARITYENV_PYTHONNOUSERSITE=true singularity exec -e docker://brainlife/dipy:0.16.0 brainlife-utils/create_training_dataset.py
-	#singularity exec --nv docker://paoloavesani/docker-test \
-        #            bin/peaks_to_cnn \
-        #            -json brainlife-utils/brainlife_config_training.json
+	singularity exec -e --nv docker://paoloavesani/docker-test bash -c \
+	            "brainlife-utils/create_training_dataset.py && \
+                    bin/peaks_to_cnn -json brainlife-utils/brainlife_config_training.json"
                     
 	if [ -d 'final_output/' ]; then 
  		rm -r final_output
@@ -61,13 +59,10 @@ else
  		rm -r test_output
 	fi
 
-  	#CMD="brainlife-utils/create_test_dataset.py && \
-  	#bin/peaks_to_cnn -json brainlife-utils/brainlife_config_test.json && \
-  	#brainlife-utils/adjust_test_output.py"
-	#SINGULARITYENV_PYTHONNOUSERSITE=true
-	singularity exec -e --nv docker://paoloavesani/docker-test bash -c "brainlife-utils/create_test_dataset.py && \
-  	bin/peaks_to_cnn -json brainlife-utils/brainlife_config_test.json && \
-  	brainlife-utils/adjust_test_output.py"
+	singularity exec -e --nv docker://paoloavesani/docker-test bash -c \
+	            "brainlife-utils/create_test_dataset.py && \
+  	            bin/peaks_to_cnn -json brainlife-utils/brainlife_config_test.json && \
+  	            brainlife-utils/adjust_test_output.py"
 
   	if [ -d 'tractseg_output/' ]; then 
  		rm -r tractseg_output
