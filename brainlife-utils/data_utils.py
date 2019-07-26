@@ -105,7 +105,7 @@ def create_test_dataset(config_file):
     p = nib.load(p_path)
     msk_path = '%s/%s' % (sub_dir, 'masks.nii.gz') 
     classes = read_classes(hyp_path)
-    msk = np.expand_dims(np.zeros(p.get_data().shape[:3]),len(classes))
+    msk = np.expand_dims(np.zeros(p.get_data().shape[:3]),3)
     nib.save(
         nib.Nifti1Image(msk, affine=p.affine, header=p.header.copy()),
         msk_path)    
