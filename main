@@ -38,12 +38,28 @@ if [ ! $num_epochs == null ]; then
 	fi
 
 	mv output final_output
-	mkdir weights
+	mkdir -p weights
 	mv final_output/*.npz weights/weights.npz
  	mv final_output/Hyperparameters.txt weights/Hyperparameters.txt
-	mkdir images
+	mkdir -p images
 	mv final_output/*.png images/.
-	cp brainlife-utils/brainlife_config_training.json images.json
+	cat <<EOF > images/images.json 
+{
+   "images": [
+       {
+           "filename": "images/metrics_all.png",
+           "name": "Training Metrics - All",
+           "desc": "TBD.."
+       },
+       {
+           "filename": "images/metrics.png",
+           "name": "Training Metrics",
+           "desc": "TDB.."
+       }
+}
+EOF
+	
+	echo "{\"weight\": $(cat brainlife-utils/brainlife_config_training.json) }" > product.json
 	
 	if [ -f weights/*.npz ]; then 
 		echo "Training completed."
@@ -67,7 +83,7 @@ else
   	if [ -d 'tractseg_output/' ]; then 
  		rm -r tractseg_output
 	fi
-	mkdir tractseg_output
+	mkdir -p tractseg_output
   	mv test_output tractseg_output
    	
 	if [ -z "$(ls -A -- "tractseg_output")" ]; then    
