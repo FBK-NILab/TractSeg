@@ -49,12 +49,12 @@ if [ ! $num_epochs == null ]; then
        {
            "filename": "images/metrics_all.png",
            "name": "Training Metrics - All",
-           "desc": "TBD.."
+           "desc": "f1 and loss for train, validation and test sets."
        },
        {
            "filename": "images/metrics.png",
            "name": "Training Metrics",
-           "desc": "TDB.."
+           "desc": "f1 and loss for train, validation and test sets."
        }
 }
 EOF
