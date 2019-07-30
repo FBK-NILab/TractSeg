@@ -27,7 +27,7 @@ def create_training_dataset(config_file):
 
         # i is an input data
         i_dir = os.path.join('..', i['task_id'],
-                             i['dataset_id']).encode('utf-8')
+                             i['subdir']).encode('utf-8')
 
         i_key = i['keys'][0].encode('utf-8')
         if i_key == 'peaks':
