@@ -7,6 +7,7 @@ from __future__ import print_function
 
 import argparse
 from tractseg.libs import mrtrix
+import os
 
 
 def main():
@@ -54,8 +55,12 @@ def main():
     args = parser.parse_args()
 
     # compute peaks
-    mrtrix.create_fods(args.file_in, args.file_out, args.bvals, args.bvecs,
+    out_dir, out_fn = os.path.abspath(args.file_out).rsplit('/',1)
+    mrtrix.create_fods(args.file_in, out_dir, args.bvals, args.bvecs,
                        args.brain_mask, args.csd_type, nr_cpus=args.num_cpu)
+    os.system('mv %s/peaks.nii.gz %s/%s' % (out_dir, out_dir, out_fn))
+    
+
 
 if __name__ == '__main__':
     main()
