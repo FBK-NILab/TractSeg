@@ -201,7 +201,7 @@ def hyp_txt2json(txt):
         cfg = json.loads(txt)
         
         for k,v in cfg.iteritems():
-            if type(v) == list:
+            if type(v) == list and len(v)>0:
                 if type(v[0]) == str:
                     cfg[k] = [s.encode('utf-8') for s in v]
             elif type(v) == str:
