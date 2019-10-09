@@ -18,6 +18,7 @@
     "features_filename": "peaks",
     "labels_filename": "masks",
     "data_resolution": "1.25mm",
+    "nr_of_gradients": 9,
     "classes": [],
 
     "dataset_folder": "",
