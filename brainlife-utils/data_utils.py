@@ -104,7 +104,7 @@ def create_test_dataset(config_file):
     # creating fake empty masks
     p = nib.load(p_path)
     msk_path = '%s/%s' % (sub_dir, 'masks.nii.gz') 
-    classes = read_classes(hyp_path)
+    #classes = read_classes(hyp_path)
     msk = np.expand_dims(np.zeros(p.get_data().shape[:3]),3)
     nib.save(
         nib.Nifti1Image(msk, affine=p.affine, header=p.header.copy()),
@@ -116,13 +116,19 @@ def create_test_dataset(config_file):
 
     print('dataset folders created')
 
+    # reading hyperparameters
+    hyp_cfg = hyp_txt2json(hyp_path)
+    
     with open('config_test_template.json', 'rb') as f:
         ts_config = json.load(f)
         print('reading config_test_template.json')
 
     ts_config['test_subjects'] = sub_list
     ts_config['weights_path'] = 'weights.npz'
-    ts_config['classes'] = classes
+    ts_config['classes'] = hyp_cfg['CLASSES']
+    ts_config['dataset'] = hyp_cfg['DATASET']
+    ts_config['nr_of_gradients'] = hyp_cfg['NR_OF_GRADIENTS']
+    ts_config['data_resolution'] = hyp_cfg['RESOLUTION']
     ts_config['tractseg_data_dir'] = out_dataset_dir 
     ts_config['exp_name'] = 'test_output'
     ts_config['exp_path'] = './'
@@ -181,7 +187,7 @@ def split_subjects(sub_list, perc_val, seed=None):
 
     return sub_train, sub_val
 
-def read_classes(txt):
+def hyp_txt2json(txt):
     with open(txt, 'rb') as f:
         txt = f.read()
         txt = txt.replace('\'', '"')
@@ -193,10 +199,18 @@ def read_classes(txt):
         txt = txt.replace(')',']')
         txt = txt.replace('u"','"')
         cfg = json.loads(txt)
+        
+        for k,v in cfg.iteritems():
+            if type(v) == list:
+                if type(v[0]) == str:
+                    cfg[k] = [s.encode('utf-8') for s in v]
+            elif type(v) == str:
+                cfg[k] = v.encode('utf-8')
+        return cfg
 
-        classes = cfg['CLASSES']
-        classes = [c.encode('utf-8') for c in classes]
-        classes.sort()
-
-        return classes
+#def read_classes(txt):
+#    classes = cfg['CLASSES']
+#    classes = [c.encode('utf-8') for c in classes]
+#    classes.sort()
+#   return classes
     
