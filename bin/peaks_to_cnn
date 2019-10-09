@@ -276,11 +276,16 @@ def main():
                     img_seg = img_utils.postprocess_segmentations(
                                 img_seg, 
                                 Config.CLASSES)
-
+                    
+                nii_peaks = nib.load(join(C.DATA_PATH,        
+                                    Config.DATASET_FOLDER,                
+                                    subject,                              
+                                    Config.FEATURES_FILENAME + ".nii.gz"))
                 # save predictions
                 img = nib.Nifti1Image(
                     img_seg.astype(np.uint8),
-                    img_utils.get_dwi_affine(Config.DATASET, Config.RESOLUTION))
+                    nii_peaks.affine)
+                    #img_utils.get_dwi_affine(Config.DATASET, Config.RESOLUTION))
                 nib.save(
                     img,
                     join(Config.EXP_PATH, "segmentations",
