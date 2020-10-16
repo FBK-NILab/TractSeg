@@ -3,7 +3,7 @@
 [![Run on Brainlife.io](https://img.shields.io/badge/Brainlife-bl.app.205-blue.svg)](https://doi.org/10.25663/brainlife.app.205)
 
 # TractSeg training and test
-The Apps [TractSeg training](https://doi.org/10.25663/brainlife.app.204) and [TractSeg test](https://doi.org/10.25663/brainlife.app.205) are derived by the original App [TractSeg](https://doi.org/10.25663/brainlife.app.186), with the difference that you can perform your own training on your own data. TractSeg is a tool for fast and accurate white matter bundle segmentation from Diffusion MRI, developed by (Wasserthal et al., 2018), under Apache-2.0 License. Please refer to this App https://doi.org/10.25663/brainlife.app.186 and this repository https://github.com/MIC-DKFZ/TractSeg for a comprehensive documentation of the method.
+The Apps [TractSeg training](https://doi.org/10.25663/brainlife.app.204) and [TractSeg test](https://doi.org/10.25663/brainlife.app.205) are derived from the original App [TractSeg](https://doi.org/10.25663/brainlife.app.186), with the difference that you can perform your own training on your own data. TractSeg is a tool for fast and accurate white matter bundle segmentation from Diffusion MRI, developed by (Wasserthal et al., 2018), under Apache-2.0 License. Please refer to this App https://doi.org/10.25663/brainlife.app.186 and this repository https://github.com/MIC-DKFZ/TractSeg for a comprehensive documentation of the method.
 
 ### TractSeg training App
 The App for training TractSeg on your own data is https://doi.org/10.25663/brainlife.app.204.
