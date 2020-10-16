@@ -29,6 +29,7 @@ Bundle segmentation as list of bundle masks in nifti format.
 
 ### Contributors
 - Paolo Avesani (avesani@fbk.eu)
+- Soichi Hayashi (hayashis@iu.edu)
 
 ### Funding Acknowledgement
 brainlife.io is publicly funded and for the sustainability of the project it is helpful to Acknowledge the use of the platform. We kindly ask that you acknowledge the funding below in your publications and code reusing this code.
@@ -55,13 +56,13 @@ We also kindly ask that you cite the following articles when publishing papers a
 
 * Avesani, P., McPherson, B., Hayashi, S. et al. The open diffusion data derivatives, brain data upcycling via integrated publishing of derivatives and reproducible open cloud services. Sci Data 6, 69 (2019). [https://doi.org/10.1038/s41597-019-0073-y](https://doi.org/10.1038/s41597-019-0073-y)
 
-## Running the App 
+## Running the Apps 
 
 ### On Brainlife.io
 
 You can submit the TractSeg training App online at [https://doi.org/10.25663/bl.app.204](https://doi.org/10.25663/bl.app.204) via the "Execute" tab.
 
-You can submit this TractSeg test App online at [https://doi.org/10.25663/bl.app.205](https://doi.org/10.25663/bl.app.205) via the "Execute" tab.
+You can submit the TractSeg test App online at [https://doi.org/10.25663/bl.app.205](https://doi.org/10.25663/bl.app.205) via the "Execute" tab.
 
 ### Dependencies
-This App only requires [singularity](https://www.sylabs.io/singularity/) to run.
+This Apps only requires [singularity](https://www.sylabs.io/singularity/) to run.
